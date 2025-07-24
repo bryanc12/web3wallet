@@ -11,7 +11,7 @@ import icons from "../../assets/img";
 export default function Homepage() {
     const [seedPhrase, setSeedPhrase] = useState([]);
 
-    const [mnemonicSize, setMnemonicSize] = useState(256);
+    const [mnemonicSize, setMnemonicSize] = useState();
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [walletPasswordHint, setWalletPasswordHint] = useState("");
@@ -38,6 +38,7 @@ export default function Homepage() {
         console.error(
             "Invalid mnemonic size. Use 128 or 256. Defaulting to 256."
         );
+
         setMnemonicSize(256);
         newSeedPhrase(256);
     };
