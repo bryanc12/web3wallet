@@ -141,7 +141,7 @@ export default function Homepage() {
                 <div className="flex-1 flex px-8 gap-8 my-3 min-h-fit">
                     <div className="w-1/3 flex flex-col gap-4">
                         <div className="text-2xl ml-1">Wallet Generator</div>
-                        <div className="flex-1 flex flex-col items-center">
+                        <div className="flex-1 bg-white rounded flex flex-col items-center">
                             <QRCode
                                 walletName={walletName}
                                 walletData={walletData}

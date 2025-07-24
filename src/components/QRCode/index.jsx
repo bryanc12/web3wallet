@@ -20,6 +20,7 @@ export default function WalletQRCode({
         const element = document.getElementById("qrCodeContainer");
 
         if (format === "png") {
+            console.log("Downloading QR Code in format:", format);
             toPng(element)
                 .then((dataUrl) => {
                     const link = document.createElement("a");
@@ -30,9 +31,6 @@ export default function WalletQRCode({
                 .catch((error) => {
                     console.error("Error downloading PNG:", error);
                 });
-        }
-
-        if (format === "pdf") {
         }
     };
 
@@ -54,32 +52,42 @@ export default function WalletQRCode({
     }, [walletData]);
 
     return (
-        <div className="flex-grow flex flex-col justify-center items-center bg-white rounded text-black py-6">
-            <div className="flex items-center gap-2">
-                <div className="h-6 w-6">
-                    <icons.wallet />
+        <div className="flex-1 flex flex-col justify-center items-center text-black">
+            <div
+                className="flex flex-col items-center justify-center bg-white p-5 rounded"
+                id="qrCodeContainer"
+            >
+                <div className="flex items-center gap-2">
+                    <div className="h-6 w-6">
+                        <icons.wallet />
+                    </div>
+                    <div className="font-medium tracking-wider text-xl">
+                        Web3 Wallet
+                    </div>
                 </div>
-                <div className="font-medium tracking-wider text-xl">
-                    Web3 Wallet
+                <div className="w-4/5 flex justify-center items-center p-2 mt-6">
+                    <img
+                        src={qrCodeLink}
+                        alt="Wallet Data QR Code"
+                        className="w-full"
+                    />
                 </div>
+                <div>{window.location.href}</div>
+
+                {walletName && (
+                    <div className="text-lg font-medium mt-2">{walletName}</div>
+                )}
+
+                {walletTime && (
+                    <div className="text-sm text-gray-500">{walletTime}</div>
+                )}
+
+                {walletPasswordHint && (
+                    <div className="break-all text-center">
+                        Password Hint: {walletPasswordHint}
+                    </div>
+                )}
             </div>
-            <div className="w-3/5 m-5 flex justify-center items-center">
-                <img
-                    src={qrCodeLink}
-                    alt="Wallet Data QR Code"
-                    className="w-full"
-                />
-            </div>
-
-            {walletName && (
-                <div className="text-lg font-medium">{walletName}</div>
-            )}
-
-            {walletTime && (
-                <div className="text-sm text-gray-500 my-2">{walletTime}</div>
-            )}
-
-            {walletPasswordHint && <div>Hint: {walletPasswordHint}</div>}
 
             <div className="flex gap-6 mt-10">
                 <div
@@ -91,7 +99,7 @@ export default function WalletQRCode({
                     </div>
                     <div>Download PNG</div>
                 </div>
-                <div
+                {/* <div
                     className="flex items-center justify-center gap-2 rounded bg-red-400 px-4 py-2 text-white cursor-pointer select-none duration-200 hover:bg-red-500"
                     onClick={() => handleDownload("pdf")}
                 >
@@ -99,7 +107,7 @@ export default function WalletQRCode({
                         <icons.filepdf />
                     </div>
                     <div>Download PDF</div>
-                </div>
+                </div> */}
             </div>
         </div>
     );
