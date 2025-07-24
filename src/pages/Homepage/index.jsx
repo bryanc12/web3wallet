@@ -178,7 +178,7 @@ export default function Homepage() {
                                         ))}
                                     </div>
                                 </div>
-                                <div className="flex flex-col gap-4 mt-5 w-fit">
+                                <div className="flex flex-col gap-4 mt-5 w-fit select-none">
                                     <div className="w-full">
                                         <div>Seed Phrase Size</div>
                                         <div className="flex gap-10 text-black">
