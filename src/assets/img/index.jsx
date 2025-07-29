@@ -7,11 +7,13 @@ import images from "./images";
 import eye from "./eye";
 import eyeCrossed from "./eye-crossed";
 import rotateRight from "./rotate-right";
+import upload from "./upload";
 
 const icon = {
     github,
     heart,
     notFound,
+    upload,
     eye,
     eyeCrossed,
     wallet,

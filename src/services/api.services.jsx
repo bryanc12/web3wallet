@@ -46,60 +46,75 @@ function encryptSeedPhrase(
         JSON.stringify(encryptedWalletData)
     ).toString("base64");
 
-    // console.log(decryptSeedPhrase(encryptedWalletDataBase64String, password));
-    console.log(
-        "Encrypted wallet data:",
-        getQrCodeData(encryptedWalletDataBase64String)
-    );
     return encryptedWalletDataBase64String;
 }
 
 function getQrCodeData(encryptedWalletDataBase64String) {
-    const encryptedWalletData = JSON.parse(
-        Buffer.from(encryptedWalletDataBase64String, "base64").toString("utf8")
-    );
+    try {
+        const encryptedWalletData = JSON.parse(
+            Buffer.from(encryptedWalletDataBase64String, "base64").toString(
+                "utf8"
+            )
+        );
 
-    const { nonce, password, hint, walletTime, name } = encryptedWalletData;
-    const walletTimeNumber = parseInt(walletTime, 10);
+        const { nonce, password, hint, walletTime, name } = encryptedWalletData;
 
-    // If hashedPasswordHexString is equal to password, then password is not required
-    const hashedPasswordHexString = sha3_256(nonce);
+        const walletTimeNumber = parseInt(walletTime, 10);
 
-    return {
-        walletName: name,
-        walletTime: walletTimeNumber,
-        walletPasswordHint: hint,
-        passwordRequired: hashedPasswordHexString !== password,
-    };
+        // If hashedPasswordHexString is equal to password, then password is not required
+        const hashedPasswordHexString = sha3_256(nonce);
+
+        return {
+            walletName: name,
+            walletTime: walletTimeNumber,
+            walletPasswordHint: hint,
+            passwordRequired: hashedPasswordHexString !== password,
+        };
+    } catch (error) {
+        console.error("Error parsing QR code data:", error);
+        return null;
+    }
 }
 
-function decryptSeedPhrase(encryptedWalletDataBase64String, password) {
-    const encryptedWalletData = JSON.parse(
-        Buffer.from(encryptedWalletDataBase64String, "base64").toString("utf8")
-    );
+function decryptSeedPhrase(encryptedWalletDataBase64String, password = "") {
+    try {
+        const encryptedWalletData = JSON.parse(
+            Buffer.from(encryptedWalletDataBase64String, "base64").toString(
+                "utf8"
+            )
+        );
 
-    const { nonce, hint, walletTime, ciphertext } = encryptedWalletData;
+        const { nonce, walletTime, ciphertext } = encryptedWalletData;
 
-    const nonceByte = Buffer.from(nonce, "base64");
-    const walletTimeNumber = parseInt(walletTime, 10);
-    const encryptedSeedPhraseByte = Buffer.from(ciphertext, "base64");
+        const nonceByte = Buffer.from(nonce, "base64");
+        const walletTimeNumber = parseInt(walletTime, 10);
+        const encryptedSeedPhraseByte = Buffer.from(ciphertext, "base64");
 
-    const hashedPasswordHexString = sha3_256(nonce + password);
-    const hashedPasswordByte = Buffer.from(hashedPasswordHexString, "hex");
+        const hashedPasswordHexString = sha3_256(nonce + password);
+        const hashedPasswordByte = Buffer.from(hashedPasswordHexString, "hex");
 
-    const cipher = new ChaCha20Poly1305(hashedPasswordByte);
+        const cipher = new ChaCha20Poly1305(hashedPasswordByte);
 
-    const decryptedSeedPhraseByte = cipher.open(
-        nonceByte,
-        encryptedSeedPhraseByte,
-        walletTimeNumber
-    );
+        const decryptedSeedPhraseByte = cipher.open(
+            nonceByte,
+            encryptedSeedPhraseByte,
+            walletTimeNumber
+        );
 
-    const decryptedSeedPhrase = Buffer.from(decryptedSeedPhraseByte).toString(
-        "utf8"
-    );
+        if (!decryptedSeedPhraseByte) {
+            console.log("Decryption failed. Incorrect password or data.");
+            return null;
+        }
 
-    return decryptedSeedPhrase.split(" ");
+        const decryptedSeedPhrase = Buffer.from(
+            decryptedSeedPhraseByte
+        ).toString("utf8");
+
+        return decryptedSeedPhrase.split(" ");
+    } catch (error) {
+        console.error("Error decrypting seed phrase:", error);
+        return null;
+    }
 }
 
 function getSeedPhrase(size = 256) {

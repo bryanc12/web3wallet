@@ -14,7 +14,7 @@ function App() {
                 <Route path="/" element={<Homepage />} />
                 <Route path="/recover" element={<Recover />} />
 
-                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<Homepage />} />
             </Routes>
         </Router>
     );

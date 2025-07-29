@@ -38,11 +38,10 @@ export default function WalletQRCode({
         if (!walletData) return;
 
         const stringWalletData = JSON.stringify(walletData);
-        console.log(stringWalletData);
         try {
             QRCode.toDataURL(stringWalletData, {
                 errorCorrectionLevel: "H",
-                margin: 0,
+                margin: 1,
             }).then((url) => {
                 setQrCodeLink(url);
             });
@@ -52,7 +51,7 @@ export default function WalletQRCode({
     }, [walletData]);
 
     return (
-        <div className="flex-1 flex flex-col justify-center items-center text-black">
+        <div className="flex-1 flex flex-col justify-center items-center text-black pb-5">
             <div
                 className="flex flex-col items-center justify-center bg-white p-5 rounded"
                 id="qrCodeContainer"
@@ -89,7 +88,7 @@ export default function WalletQRCode({
                 )}
             </div>
 
-            <div className="flex gap-6 mt-10">
+            <div className="flex gap-6 mt-5">
                 <div
                     className="flex items-center justify-center gap-2 rounded bg-blue-400 px-4 py-2 text-white cursor-pointer select-none duration-200 hover:bg-blue-500"
                     onClick={() => handleDownload("png")}

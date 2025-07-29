@@ -21,7 +21,7 @@ export default function Navbar() {
                     <icons.wallet />
                 </div>
                 <div className="font-medium tracking-wider text-xl">
-                    Web3 Wallet
+                    WEBTHR33.XYZ
                 </div>
             </div>
             <div className="w-1/3 items-center flex justify-center gap-8">

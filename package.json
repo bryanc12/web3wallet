@@ -3,7 +3,6 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@scure/bip32": "^1.7.0",
         "@scure/bip39": "^1.6.0",
         "@stablelib/chacha20poly1305": "^2.0.1",
         "@testing-library/jest-dom": "^6.6.3",
@@ -11,7 +10,9 @@
         "@testing-library/user-event": "^14.6.1",
         "buffer": "^6.0.3",
         "html-to-image": "^1.11.13",
+        "jimp": "^1.6.0",
         "js-sha3": "^0.9.3",
+        "jsqr": "^1.4.0",
         "qrcode": "^1.5.4",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",

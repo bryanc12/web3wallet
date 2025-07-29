@@ -216,7 +216,7 @@ export default function Homepage() {
                                                     </div>
                                                     <div
                                                         className={
-                                                            "cursor-pointer select-none bg-blue-300 absolute top-0 left-0 w-1/2 h-[100%] rounded duration-200 z-40" +
+                                                            "cursor-pointer select-none bg-blue-400 absolute top-0 left-0 w-1/2 h-[100%] rounded duration-200 z-40" +
                                                             (mnemonicSize ===
                                                             128
                                                                 ? " ml-0"
@@ -346,7 +346,7 @@ export default function Homepage() {
                             </div>
                             <div className="flex mt-5">
                                 <div
-                                    className="bg-green-400 hover:bg-green-500 select-none cursor-pointer text-white rounded px-4 py-2 font-medium"
+                                    className="bg-green-400 hover:bg-green-500 duration-200 select-none cursor-pointer text-white rounded px-4 py-2 font-medium"
                                     onClick={() => {
                                         generateEncryptedWalletData();
                                     }}
